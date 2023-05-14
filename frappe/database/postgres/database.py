@@ -157,24 +157,24 @@ class PostgresDatabase(PostgresExceptionUtil, Database):
 
 	def get_connection(self):
 		params = {
-			'host': self.host,
-			'port': self.port,
-			'dbname': self.user,
-			'user': self.user,
-			'password': self.password
+			'host': f"'{self.host}'",
+			'dbname': f"'{self.user}'",
+			'user': f"'{self.user}'",
+			'password': f"'{self.password}'",
+			'port': self.port
 		}
 
 		if self.sslmode:
-			params['sslmode'] = self.sslmode
+			params['sslmode'] = f"'{self.sslmode}'"
 
 		if self.sslrootcert:
-			params['sslrootcert'] = self.sslrootcert
+			params['sslrootcert'] = f"'{self.sslrootcert}'"
 
 		if self.sslcert:
-			params['sslcert'] = self.sslcert
+			params['sslcert'] = f"'{self.sslcert}'"
 
 		if self.sslkey:
-			params['sslkey'] = self.sslkey
+			params['sslkey'] = f"'{self.sslkey}'"
 
 		# Construct the connection string from the parameters
 		conn_string = ' '.join(f"{k}={v}" for k, v in params.items())
