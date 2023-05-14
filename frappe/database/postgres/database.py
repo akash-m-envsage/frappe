@@ -156,11 +156,30 @@ class PostgresDatabase(PostgresExceptionUtil, Database):
 		return LazyDecode(self._cursor.query)
 
 	def get_connection(self):
-		conn = psycopg2.connect(
-			"host='{}' dbname='{}' user='{}' password='{}' port={}".format(
-				self.host, self.user, self.user, self.password, self.port
-			)
-		)
+		params = {
+			'host': self.host,
+			'port': self.port,
+			'dbname': self.user,
+			'user': self.user,
+			'password': self.password
+		}
+
+		if self.sslmode:
+			params['sslmode'] = self.sslmode
+
+		if self.sslrootcert:
+			params['sslrootcert'] = self.sslrootcert
+
+		if self.sslcert:
+			params['sslcert'] = self.sslcert
+
+		if self.sslkey:
+			params['sslkey'] = self.sslkey
+
+		# Construct the connection string from the parameters
+		conn_string = ' '.join(f"{k}={v}" for k, v in params.items())
+
+		conn = psycopg2.connect(conn_string)
 		conn.set_isolation_level(ISOLATION_LEVEL_REPEATABLE_READ)
 
 		return conn
