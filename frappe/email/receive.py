@@ -18,7 +18,8 @@ from email_reply_parser import EmailReplyParser
 
 import frappe
 from frappe import _, safe_decode, safe_encode
-from frappe.core.doctype.file import MaxFileSizeReachedError, get_random_filename
+from frappe.core.doctype.file.exceptions import MaxFileSizeReachedError
+from frappe.core.doctype.file.utils import get_random_filename
 from frappe.email.oauth import Oauth
 from frappe.utils import (
 	add_days,
@@ -459,6 +460,10 @@ class Email:
 		if content_type == "text/plain":
 			self.text_content += self.get_payload(part)
 
+			# attach txt file from received email as well aside from saving to text_content if it has filename
+			if part.get_filename():
+				self.get_attachment(part)
+
 		elif content_type == "text/html":
 			self.html_content += self.get_payload(part)
 
@@ -853,7 +858,7 @@ class InboundMail(Email):
 		"""Remove Prefixes like 'fw', FWD', 're' etc from subject."""
 		# Match strings like "fw:", "re	:" etc.
 		regex = r"(^\s*(fw|fwd|wg)[^:]*:|\s*(re|aw)[^:]*:\s*)*"
-		return frappe.as_unicode(strip(re.sub(regex, "", subject, 0, flags=re.IGNORECASE)))
+		return frappe.as_unicode(strip(re.sub(regex, "", subject, count=0, flags=re.IGNORECASE)))
 
 	@staticmethod
 	def get_email_fields(doctype):
