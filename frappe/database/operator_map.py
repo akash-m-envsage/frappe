@@ -78,6 +78,18 @@ def func_regex(key: Field, value: str) -> frappe.qb:
 	"""
 	return key.regex(value)
 
+def func_regexp(key: Field, value: str) -> frappe.qb:
+	"""Wrapper method for `REGEXP`
+
+	Args:
+	        key (str): field
+	        value (str): criterion
+
+	Returns:
+	        frappe.qb: `frappe.qb object with `REGEXP`
+	"""
+	return key.regexp(value)
+
 
 def func_between(key: Field, value: list | tuple) -> frappe.qb:
 	"""Wrapper method for `BETWEEN`
@@ -130,6 +142,7 @@ OPERATOR_MAP: dict[str, Callable] = {
 	"like": like,
 	"not like": not_like,
 	"regex": func_regex,
+	"regexp": func_regexp,
 	"between": func_between,
 	"is": func_is,
 	"timespan": func_timespan,

@@ -1801,6 +1801,7 @@ def get_filter(doctype: str, f: dict | list | tuple, filters_config=None) -> "fr
 		"like",
 		"not like",
 		"in",
+		"regexp",
 		"not in",
 		"is",
 		"between",
