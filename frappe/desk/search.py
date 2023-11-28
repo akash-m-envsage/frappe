@@ -33,6 +33,7 @@ def search_link(
 	searchfield=None,
 	reference_doctype=None,
 	ignore_user_permissions=False,
+	parent_doctype=None,
 ):
 	search_widget(
 		doctype,
@@ -43,6 +44,7 @@ def search_link(
 		filters=filters,
 		reference_doctype=reference_doctype,
 		ignore_user_permissions=ignore_user_permissions,
+		parent_doctype=parent_doctype,
 	)
 
 	frappe.response["results"] = build_for_autosuggest(frappe.response["values"], doctype=doctype)
@@ -63,6 +65,7 @@ def search_widget(
 	as_dict=False,
 	reference_doctype=None,
 	ignore_user_permissions=False,
+	parent_doctype=None,
 ):
 
 	start = cint(start)
@@ -120,6 +123,7 @@ def search_widget(
 			as_dict=as_dict,
 			reference_doctype=reference_doctype,
 			ignore_user_permissions=ignore_user_permissions,
+			parent_doctype=parent_doctype,
 		)
 	else:
 		meta = frappe.get_meta(doctype)
@@ -207,6 +211,7 @@ def search_widget(
 					and has_permission(
 						doctype,
 						ptype="select" if frappe.only_has_select_perm(doctype) else "read",
+						parent_doctype= parent_doctype
 					)
 				)
 			)
@@ -221,6 +226,7 @@ def search_widget(
 				order_by=order_by,
 				ignore_permissions=ignore_permissions,
 				reference_doctype=reference_doctype,
+				parent_doctype=parent_doctype,
 				as_list=not as_dict,
 				strict=False,
 			)
