@@ -9,8 +9,8 @@ from frappe.utils.oauth import login_via_oauth2, login_via_oauth2_id_token
 
 
 @frappe.whitelist(allow_guest=True)
-def login_via_google(code: str, state: str):
-	login_via_oauth2("google", code, state, decoder=decoder_compat)
+def login_via_google(code: str, state: str, generate_login_token: bool = False):
+	login_via_oauth2("google", code, state, decoder=decoder_compat, generate_login_token=generate_login_token)
 
 
 @frappe.whitelist(allow_guest=True)

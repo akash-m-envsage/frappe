@@ -110,9 +110,9 @@ def get_redirect_uri(provider: str) -> str:
 	return frappe.utils.get_url(redirect_uri)
 
 
-def login_via_oauth2(provider: str, code: str, state: str, decoder: Callable | None = None):
+def login_via_oauth2(provider: str, code: str, state: str, decoder: Callable | None = None, generate_login_token: bool = False):
 	info = get_info_via_oauth(provider, code, decoder)
-	login_oauth_user(info, provider=provider, state=state)
+	login_oauth_user(info, provider=provider, state=state, generate_login_token=generate_login_token)
 
 
 def login_via_oauth2_id_token(
