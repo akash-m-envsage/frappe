@@ -111,7 +111,10 @@ def get_redirect_uri(provider: str) -> str:
 
 
 def login_via_oauth2(provider: str, code: str, state: str, decoder: Callable | None = None, generate_login_token: bool = False):
-	info = get_info_via_oauth(provider, code, decoder)
+	if isinstance(state, str):
+		state = base64.b64decode(state)
+		state = json.loads(state.decode("utf-8"))
+	info = get_info_via_oauth(provider, code, decoder, state=state)
 	login_oauth_user(info, provider=provider, state=state, generate_login_token=generate_login_token)
 
 
@@ -123,7 +126,7 @@ def login_via_oauth2_id_token(
 
 
 def get_info_via_oauth(
-	provider: str, code: str, decoder: Callable | None = None, id_token: bool = False
+	provider: str, code: str, decoder: Callable | None = None, id_token: bool = False, state: dict | str | None = None
 ):
 
 	import jwt
@@ -131,10 +134,14 @@ def get_info_via_oauth(
 	flow = get_oauth2_flow(provider)
 	oauth2_providers = get_oauth2_providers()
 
+	if isinstance(state, str):
+		state = base64.b64decode(state)
+		state = json.loads(state.decode("utf-8"))
+
 	args = {
 		"data": {
 			"code": code,
-			"redirect_uri": get_redirect_uri(provider),
+			"redirect_uri": state['redirect_uri'] if state and state['redirect_uri'] else get_redirect_uri(provider),
 			"grant_type": "authorization_code",
 		}
 	}
