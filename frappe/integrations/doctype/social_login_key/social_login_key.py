@@ -44,6 +44,7 @@ class SocialLoginKey(Document):
 		access_token_url: DF.Data | None
 		api_endpoint: DF.Data | None
 		api_endpoint_args: DF.Code | None
+		application_type: DF.Literal['Web Application', 'Android', 'iOS']
 		auth_url_data: DF.Code | None
 		authorize_url: DF.Data | None
 		base_url: DF.Data | None
@@ -54,9 +55,7 @@ class SocialLoginKey(Document):
 		icon: DF.Data | None
 		provider_name: DF.Data
 		redirect_url: DF.Data | None
-		social_login_provider: DF.Literal[
-			"Custom", "Facebook", "Frappe", "GitHub", "Google", "Office 365", "Salesforce", "fairlogin"
-		]
+		social_login_provider: DF.Literal['Custom', 'Facebook', 'Frappe', 'GitHub', 'Google', 'Office 365', 'Salesforce', 'fairlogin']
 		user_id_property: DF.Data | None
 	# end: auto-generated types
 	def autoname(self):
@@ -92,8 +91,8 @@ class SocialLoginKey(Document):
 			"fairlogin": "fair.svg",
 		}
 
-		if self.provider_name in icon_map:
-			icon_file = icon_map[self.provider_name]
+		if self.social_login_provider in icon_map:
+			icon_file = icon_map[self.social_login_provider]
 			self.icon = f"/assets/frappe/icons/social/{icon_file}"
 
 	@frappe.whitelist()

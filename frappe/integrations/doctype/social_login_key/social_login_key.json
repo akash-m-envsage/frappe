@@ -11,6 +11,7 @@
   "client_credentials",
   "social_login_provider",
   "client_id",
+  "application_type",
   "column_break_0",
   "provider_name",
   "client_secret",
@@ -157,11 +158,19 @@
    "fieldname": "user_id_property",
    "fieldtype": "Data",
    "label": "User ID Property"
+  },
+  {
+   "default": "Web Application",
+   "fieldname": "application_type",
+   "fieldtype": "Select",
+   "label": "Application Type",
+   "options": "Web Application\nAndroid\niOS",
+   "set_only_once": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-09-30 14:37:13.616002",
+ "modified": "2023-12-26 15:02:17.537195",
  "modified_by": "Administrator",
  "module": "Integrations",
  "name": "Social Login Key",
@@ -182,6 +191,7 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "title_field": "provider_name",
  "track_changes": 1
 }

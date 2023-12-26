@@ -36,7 +36,9 @@ frappe.ui.form.on("Social Login Key", {
 					const provider = r.message;
 					for (var field of fields) {
 						frm.set_value(field, provider[field]);
-						frm.set_df_property(field, "read_only", 1);
+						if(field !== 'provider_name') {
+							frm.set_df_property(field, "read_only", 1);
+						}
 						if (frm.doc.custom_base_url) {
 							frm.toggle_enable("base_url", 1);
 						}
@@ -58,7 +60,9 @@ frappe.ui.form.on("Social Login Key", {
 		// set fields to read only for providers from template
 		for (var f of fields) {
 			if (frm.doc.social_login_provider != "Custom") {
-				frm.set_df_property(f, "read_only", 1);
+				if(f !== 'provider_name') {
+					frm.set_df_property(f, "read_only", 1);
+				}
 			}
 		}
 
