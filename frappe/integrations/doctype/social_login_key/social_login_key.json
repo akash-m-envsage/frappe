@@ -50,6 +50,9 @@
    "depends_on": "eval:doc.custom!=1",
    "fieldname": "social_login_provider",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Social Login Provider",
    "options": "Custom\nFacebook\nFrappe\nGitHub\nGoogle\nOffice 365\nSalesforce\nfairlogin",
    "set_only_once": 1
@@ -163,6 +166,9 @@
    "default": "Web Application",
    "fieldname": "application_type",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Application Type",
    "options": "Web Application\nAndroid\niOS",
    "set_only_once": 1
@@ -170,7 +176,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-26 15:02:17.537195",
+ "modified": "2023-12-26 15:38:47.218575",
  "modified_by": "Administrator",
  "module": "Integrations",
  "name": "Social Login Key",
